@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game Aurélien Sallin</title>
+    <style>
+        /* style.css */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+            width: 900px;
+            background-color: #f0f0f0;
+            text-align: left;
+            align-items: center;
+        }
+
+        /*flex-direction: column;*/
+
+        header {
+            margin-bottom: 20px;
+            margin-top: 20px;
+            margin-left: 100px;
+            margin-right: 70px;
+        }
+
+        footer {
+            margin-top: 20px;
+            align-items: bottom;
+            flex-direction: bottom;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .main-container {
+            display: flex;
+            /*flex-direction: column;*/
+            /* Stack children vertically */
+            align-items: center;
+            /* Align items in the center horizontally */
+            justify-content: center;
+            /* Center content vertically in the container */
+            width: 100%;
+            /* Adjust based on your preference */
+            max-width: 600px;
+            /* Maximum width of the container */
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .card {
+            width: 175px;
+            /* Adjust based on your preference */
+            height: 175px;
+            background-color: #ffffff;
+            border: 2px solid #cccccc;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            margin: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card img {
+            max-width: 100%;
+            /* Ensure the image fits within the card */
+            max-height: 100%;
+            /* Prevent the image from exceeding the card size */
+            border-radius: 1px;
+            /* Match the card's border-radius */
+            object-fit: cover;
+            display: block;
+            /* Ensure img tag fills the card */
+        }
+
+        .card .card-text {
+            display: none;
+            /* Initially hide text */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: rgba(255, 255, 255, 0.8);
+            /* Slightly transparent or solid color */
+            color: #100;
+            /* Text color */
+            font-size: 14px;
+            /* Adjust as needed */
+        }
+    </style>
+</head>
+
+<!-- Use https://www.labnol.org/embed/google/drive/ to embed google drive pictures -->
+
+<body>
+    <div class="main-container">
+        <header>
+            <h1>Memory Game </h1>
+            <p>Welcome to my interactive resume! Match each card with its corresponding description to learn more about
+                me.
+            </p>
+            <footer>
+                <p>Find out more about my professional background:</p>
+                <a href="path/to/your_cv.pdf" target="_blank">Download My CV</a> |
+                <a href="https://www.linkedin.com/in/yourprofile" target="_blank">LinkedIn Profile</a>
+            </footer>
+        </header>
+
+        <div id="game-board" class="game-board">
+            <!-- Game board will be populated by JavaScript -->
+        </div>
+
+        <script>
+            const cardArray = [
+                { id: 1, type: 'text', content: 'Many professional experiences in comfortable and less comfortable situations.' },
+                //{ id: 1, type: 'image', content: 'pope.jpg' },
+                { id: 1, type: 'image', content: 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYQA5H0Z4Vr0Fj66es_8NQCMKPCf1NwWkuuwmu0f-NdYrE-mXTgcsmeJckEPVls_9RvAOzBUS1GFgDcHLqn-0u50s7KotQ=s2560' },
+                { id: 2, type: 'text', content: '' },
+                //{ id: 2, type: 'image', content: 'bowling.jpg' },
+                { id: 2, type: 'image', content: 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYSJyHBktwRZ7IbJ0RD85kYjP6gUs9oZJgXJ-UQYBAs9TR5Y22IkaV_f708UQMGya-OMULCtJQUunqaEPHEq9W0NeWCytQ=s1600' },
+                { id: 3, type: 'text', content: 'I have a deep understanding of the Swiss medical system' },
+                //{ id: 3, type: 'image', content: 'fondue.jpg' },
+                { id: 3, type: 'image', content: 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYSJyHBktwRZ7IbJ0RD85kYjP6gUs9oZJgXJ-UQYBAs9TR5Y22IkaV_f708UQMGya-OMULCtJQUunqaEPHEq9W0NeWCytQ=s1600' },
+                { id: 4, type: 'text', content: 'Data scientist and economist by passion. Flexible work style.' },
+                //{ id: 4, type: 'image', content: 'geek.jpg' },
+                { id: 4, type: 'image', content: 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYTeBNMiS-eUD9V4YjKNLwvsR25kcjllX4XD1WKFd8DBbNAT69-fbbrUTNy2IBtTeEbFSNEmpDOx7T7K2QI2Ct5-6Hk1=s1600' },
+                { id: 5, type: 'text', content: 'Higher and further.' },
+                { id: 5, type: 'image', content: 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYR-TCdUEatLmhEpJv1zyL82G2bXILKfCJnBhsHIQxOiWEUOhL-sMRHR6460CXYZzeo7uVa58_vdq9uaekUst0K0cD86=s1600' },
+                { id: 6, type: 'text', content: 'Highly motivated and curious with a strong quantitative and qualitative background.' },
+                { id: 6, type: 'image', content: 'graduation.jpg' },
+                { id: 7, type: 'text', content: 'Team-oriented. ' },
+                { id: 7, type: 'image', content: 'team.jpg' },
+                // Continue for each pair
+            ];
+
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]]; // ES6 array destructuring
+                }
+            }
+            shuffleArray(cardArray); // Shuffle the cards
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const gameBoard = document.getElementById('game-board');
+
+                function createBoard() {
+                    for (let i = 0; i < cardArray.length; i++) {
+                        const card = document.createElement('div');
+                        card.classList.add('card');
+                        card.setAttribute('data-id', i);
+
+                        if (cardArray[i].type === 'image') {
+                            const cardImage = document.createElement('img');
+                            cardImage.setAttribute('src', 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYRsYA8ioI6i2F3R18eEGEySCj3_xl_6ScY_rEVBIkuAR68WbN7aSSg84rTPPu_EnyqshM7x63uv5BifPFE78jmD0Ad9CA=s2560');
+                            //cardImage.setAttribute('src', 'backRed.jpg');
+                            cardImage.setAttribute('data-id', i);
+                            card.appendChild(cardImage);
+                        } else {
+                            // Create a div for text inside the card
+                            const cardText = document.createElement('div');
+                            cardText.classList.add('card-text');
+                            cardText.textContent = cardArray[i].content;
+                            cardText.style.display = 'none'; // Initially hidden
+                            card.appendChild(cardText);
+                        }
+
+                        gameBoard.appendChild(card);
+                        card.addEventListener('click', flipCard);
+                    }
+                }
+
+                createBoard();
+            });
+
+
+            function flipCard() {
+                const cardId = this.getAttribute('data-id');
+
+                // Check if the card is already selected or the same card is clicked twice
+                if (cardsChosenIds.includes(cardId)) {
+                    // Do nothing if the same card is clicked twice or already selected
+                    return;
+                }
+
+                const cardType = cardArray[cardId].type;
+                if (cardType === 'image') {
+                    this.firstChild.setAttribute('src', cardArray[cardId].content);
+                } else {
+                    // For text cards, show the text if hidden, or hide if shown
+                    const cardText = this.querySelector('div');
+                    cardText.style.display = cardText.style.display === 'none' ? 'block' : 'none';
+                }
+
+                cardsChosen.push(cardArray[cardId]);
+                cardsChosenIds.push(cardId);
+
+                if (cardsChosen.length === 2) {
+                    setTimeout(checkForMatch, 700);
+                }
+            }
+
+            function checkForMatch() {
+                const cards = document.querySelectorAll('.card');
+                const optionOneId = cardsChosenIds[0];
+                const optionTwoId = cardsChosenIds[1];
+                const optionOneContent = cards[optionOneId].querySelector('.card-text') || cards[optionOneId].querySelector('img');
+                const optionTwoContent = cards[optionTwoId].querySelector('.card-text') || cards[optionTwoId].querySelector('img');
+
+                if (cardsChosen[0].id === cardsChosen[1].id) {
+                    alert('You found a match');
+                    cards[optionOneId].style.visibility = 'hidden';
+                    cards[optionTwoId].style.visibility = 'hidden';
+                } else {
+                    // Reset both cards
+                    if (optionOneContent.tagName === 'IMG') {
+                        //optionOneContent.setAttribute('src', 'backRed.jpg');
+                        optionOneContent.setAttribute('src', 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYRsYA8ioI6i2F3R18eEGEySCj3_xl_6ScY_rEVBIkuAR68WbN7aSSg84rTPPu_EnyqshM7x63uv5BifPFE78jmD0Ad9CA=s2560');
+                    } else {
+                        optionOneContent.style.display = 'none'; // Hide text
+                    }
+                    if (optionTwoContent.tagName === 'IMG') {
+                        //optionTwoContent.setAttribute('src', 'backRed.jpg');
+                        optionTwoContent.setAttribute('src', 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYRsYA8ioI6i2F3R18eEGEySCj3_xl_6ScY_rEVBIkuAR68WbN7aSSg84rTPPu_EnyqshM7x63uv5BifPFE78jmD0Ad9CA=s2560');
+                    } else {
+                        optionTwoContent.style.display = 'none'; // Hide text
+                    }
+                }
+                cardsChosen = [];
+                cardsChosenIds = [];
+            }
+
+            let cardsChosen = [];
+            let cardsChosenIds = [];
+
+        </script>
+
+</body>
+</div>
+
+
+</html>

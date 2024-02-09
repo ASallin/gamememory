@@ -12,8 +12,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 90vh;
-            width: 1200px;
+            height: 780px;
+            width: 1100px;
             background-color: #f0f0f0;
             text-align: left;
             align-items: center;
@@ -24,7 +24,7 @@
         header {
             margin-bottom: 20px;
             margin-top: 20px;
-            margin-left: 20px;
+            margin-left: 40px;
             margin-right: 40px;
             width: 100%;
             font-size: 14px;
@@ -62,7 +62,7 @@
         .game-board {
             display: grid;
             /*background-color: #fff;  This will be the color of your game background */
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 10px;
             max-width: 800px;
             margin: auto;
@@ -98,9 +98,11 @@
         }
 
         .card .card-text {
+            display: flex;
+            flex-direction: column;
             display: none;
             /* Initially hide text */
-            position: relative;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
@@ -112,7 +114,7 @@
             box-sizing: border-box;
             background-color: rgba(255, 255, 255, 0.8);
             /* Slightly transparent or solid color */
-            color: rgb(43, 10, 233);
+            color: rgb(21, 20, 24);
             /* Text color */
             font-size: 15px;
             /* Adjust as needed */
@@ -128,17 +130,18 @@
     <div class="main-container">
         <header style="width: 100%;">
             <h1>"A data analyst with an attitude"</h1>
-            <p>Dear Ivan, </p>
+            <p>Dear Ivan Tomka, </p>
             <p>I heard your online talk last year at the Hochschule Luzern about fraud detection in health insurance,
                 and I became immediately fascinated. Since then, I've always wanted to contact you personally to explore
                 possible collaborations.
             </p>
             <p>Following your job posting, the opportunity to introduce myself and explore opportunities has finally
-                come: here is a short game to tell you a bit about who I am. 😃 </p>
+                come: here is a short game to tell you a bit about who I am. Match each picture with its text
+                description. </p>
             <p>For a more formal introduction, feel free to check my CV or my linkedin profile.</p>
             <a href="path/to/your_cv.pdf" target="_blank">Download My CV</a> |
             <a href="https://www.linkedin.com/in/yourprofile" target="_blank">LinkedIn Profile</a>
-            <p>I am looking to meeting you. </p>
+            <p>I am looking to hearing from you. </p>
             <p>Best,</p>
             <p>Aurélien</p>
         </header>
@@ -149,10 +152,10 @@
 
         <script>
             const cardArray = [
-                { id: 1, type: 'text', content: 'Many diverse and character-building professional experiences in comfortable and less comfortable situations.' },
+                { id: 1, type: 'text', content: 'I have gained many diverse and character-building professional experiences in comfortable and less comfortable situations.' },
                 //{ id: 1, type: 'image', content: 'pope.jpg' },
                 { id: 1, type: 'image', content: 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYQA5H0Z4Vr0Fj66es_8NQCMKPCf1NwWkuuwmu0f-NdYrE-mXTgcsmeJckEPVls_9RvAOzBUS1GFgDcHLqn-0u50s7KotQ=s2560' },
-                { id: 2, type: 'text', content: 'I favor on-point and straight communication style. I celebrate, and learn from, my deviations and mistakes.' },
+                { id: 2, type: 'text', content: 'I enjoy an on-point and straight communication style. I am not scared to improve my techniques and learn from deviations and mistakes.' },
                 //{ id: 2, type: 'image', content: 'bowling.jpg' },
                 { id: 2, type: 'image', content: 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYSJyHBktwRZ7IbJ0RD85kYjP6gUs9oZJgXJ-UQYBAs9TR5Y22IkaV_f708UQMGya-OMULCtJQUunqaEPHEq9W0NeWCytQ=s1600' },
                 { id: 3, type: 'text', content: 'I have a rooted and deep understanding of Swiss cultures and systems, especially the Swiss healthcare system.' },
@@ -161,7 +164,7 @@
                 { id: 4, type: 'text', content: 'I am a data scientist and economist by passion, not obligation.' },
                 //{ id: 4, type: 'image', content: 'geek.jpg' },
                 { id: 4, type: 'image', content: 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYTeBNMiS-eUD9V4YjKNLwvsR25kcjllX4XD1WKFd8DBbNAT69-fbbrUTNy2IBtTeEbFSNEmpDOx7T7K2QI2Ct5-6Hk1=s1600' },
-                { id: 5, type: 'text', content: 'Higher and further.' },
+                { id: 5, type: 'text', content: 'I have specialized in data science, (causal) machine learning and quasi-experimental methods using R and Python.' },
                 { id: 5, type: 'image', content: 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYR-TCdUEatLmhEpJv1zyL82G2bXILKfCJnBhsHIQxOiWEUOhL-sMRHR6460CXYZzeo7uVa58_vdq9uaekUst0K0cD86=s1600' },
                 { id: 6, type: 'text', content: 'Highly motivated and curious with a strong quantitative and qualitative background, I value excellence and beauty in what I do.' },
                 { id: 6, type: 'image', content: 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYQpPIuh4LvzL56QzbVEM4W4kk37uCt2xxytFvEjiOvJeM_tiUjPQA8LXkbDZY6l5bUIi7JUHvq7rAHRjNdYr8i8Now6_A=s1600' },
@@ -169,8 +172,8 @@
                 { id: 7, type: 'image', content: 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYRUnhL6gQf7U9lvjq62pfbBqXTCYwcPSKB45TQW0puN3oI5Sc_oCQ1TUNmdrpO-ZDEypVYeyAHAybBdMPzNh8ny5pdP=s1600' },
                 { id: 8, type: 'text', content: 'I spent my last two years gathering intelligence from insurance claim data and communicating them to internal and external stakeholders.' },
                 { id: 8, type: 'image', content: 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYQAvtFm7D1ZsugEicrMeIOnxxoIenvPUVVEuFqKGej5o_70A7hes-tw4Vu0WtrVc7K-h3QOsekhxKeIq0EWV1x_dVhd=s1600' },
-                { id: 9, type: 'text', content: 'Bread ' },
-                { id: 9, type: 'image', content: 'bread.jpg' },
+                //{ id: 9, type: 'text', content: 'Bread ' },
+                //{ id: 9, type: 'image', content: 'bread.jpg' },
                 // Continue for each pair
             ];
 

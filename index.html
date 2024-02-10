@@ -1,1 +1,288 @@
-<h1>Hello world</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game Aurélien Sallin</title>
+    <style>
+        /* style.css */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 780px;
+            width: 1100px;
+            background-color: #f0f0f0;
+            text-align: left;
+            align-items: center;
+        }
+
+        /*flex-direction: column;*/
+
+        header {
+            margin-bottom: 20px;
+            margin-top: 20px;
+            margin-left: 40px;
+            margin-right: 40px;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        footer {
+            margin-top: 20px;
+            align-items: bottom;
+            flex-direction: bottom;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .main-container {
+            display: flex;
+            /*flex-direction: column;*/
+            /* Stack children vertically */
+            align-items: center;
+            /* Align items in the center horizontally */
+            justify-content: center;
+            /* Center content vertically in the container */
+            width: 100%;
+            /* Adjust based on your preference */
+            max-width: 10100px;
+            /* Maximum width of the container */
+        }
+
+        .game-board {
+            display: grid;
+            /*background-color: #fff;  This will be the color of your game background */
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 800px;
+            margin: auto;
+            margin-right: 40px;
+        }
+
+        .card {
+            width: 175px;
+            /* Adjust based on your preference */
+            height: 175px;
+            background-color: #ffffff;
+            border: 2px solid #cccccc;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            margin: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card img {
+            max-width: 100%;
+            /* Ensure the image fits within the card */
+            max-height: 100%;
+            /* Prevent the image from exceeding the card size */
+            border-radius: 1px;
+            /* Match the card's border-radius */
+            object-fit: cover;
+            display: block;
+            /* Ensure img tag fills the card */
+        }
+
+        .card .card-text {
+            display: flex;
+            flex-direction: column;
+            display: none;
+            /* Initially hide text */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: rgba(255, 255, 255, 0.8);
+            /* Slightly transparent or solid color */
+            color: rgb(21, 20, 24);
+            /* Text color */
+            font-size: 15px;
+            /* Adjust as needed */
+            font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+            /* Change the font family here */
+        }
+    </style>
+</head>
+
+<!-- Use https://www.labnol.org/embed/google/drive/ to embed google drive pictures -->
+
+<body>
+    <div class="main-container">
+        <header style="width: 100%;">
+            <h1>"A data analyst with an attitude"</h1>
+            <p>Guten Tag Herr Tomka, </p>
+            <p>Ich habe letztes Jahr Ihren Online-Vortrag an der Hochschule Luzern über Betrugserkennung in der
+                Krankenversicherung gehört und war sofort fasziniert. Seitdem wollte ich Sie immer persönlich
+                kontaktieren, um Möglichkeiten einer Zusammenarbeiten zu besprechen.</p>
+            <p>Nach Ihrer Stellenausschreibung ist nun endlich die Gelegenheit gekommen, mich vorzustellen und
+                potentielle Zusammenarbeit erkunden: hier ist ein kurzes Spiel, um Ihnen und ihrem Team ein wenig über
+                mich zu erzählen. Ordnen Sie jedes Bild seiner Textbeschreibung zu.</p>
+            <p>Für eine formellere Vorstellung können Sie gerne meinen Lebenslauf oder mein LinkedIn-Profil durchlesen.
+            </p>
+            <a href="path/to/your_cv.pdf" target="_blank">Lebenslauf</a> |
+            <a href="https://www.linkedin.com/in/aur%C3%A9lien-sallin-phd-365148100/"
+                target="_blank">LinkedIn-Profil</a>
+            <p>Ich freue mich darauf, von Ihnen zu hören.</p>
+            <p>Freundliche Grüsse,</p>
+            <p>Aurélien</p>
+        </header>
+
+        <div id="game-board" class="game-board">
+            <!-- Game board will be populated by JavaScript -->
+        </div>
+
+        <script>
+            const cardArray = [
+                { id: 1, type: 'text', content: 'I have gained many diverse and character-building professional experiences in comfortable and less comfortable situations.' },
+                //{ id: 1, type: 'image', content: 'pope.jpg' },
+                { id: 1, type: 'image', content: 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYQA5H0Z4Vr0Fj66es_8NQCMKPCf1NwWkuuwmu0f-NdYrE-mXTgcsmeJckEPVls_9RvAOzBUS1GFgDcHLqn-0u50s7KotQ=s2560' },
+                { id: 2, type: 'text', content: 'I am most of the time very much on point. When not, I try again.' },
+                //{ id: 2, type: 'image', content: 'bowling.jpg' },
+                { id: 2, type: 'image', content: 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYSJyHBktwRZ7IbJ0RD85kYjP6gUs9oZJgXJ-UQYBAs9TR5Y22IkaV_f708UQMGya-OMULCtJQUunqaEPHEq9W0NeWCytQ=s1600' },
+                { id: 3, type: 'text', content: 'I have a rooted and deep understanding of Swiss cultures and systems, especially the Swiss healthcare system.' },
+                //{ id: 3, type: 'image', content: 'fondue.jpg' },
+                { id: 3, type: 'image', content: 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYQRr5ixiS4-xmiQ8XLgWJNxpllqWm3lxOcoeUb-Xdeqf7XvGlFpTQ6-UPSmzYwvrOHt4JSVayj_6Ff7JHgwTHPs012Ebw=s1600' },
+                { id: 4, type: 'text', content: 'I enjoy a flexible working attitude.' },
+                //{ id: 4, type: 'image', content: 'geek.jpg' },
+                { id: 4, type: 'image', content: 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYTeBNMiS-eUD9V4YjKNLwvsR25kcjllX4XD1WKFd8DBbNAT69-fbbrUTNy2IBtTeEbFSNEmpDOx7T7K2QI2Ct5-6Hk1=s1600' },
+                { id: 5, type: 'text', content: 'I like biking. And I like nerdy data stuff done with R and Python. Hence my obsession with Strava.' },
+                { id: 5, type: 'image', content: 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYQcnyQs2-ZzcfCxpPHpq5p7z_PV4dYKU939DkYmlMLWkwN8Jlj5-JuFrGxS19m5bRqQKX_GY-nXU-51ZtXL3A62EcV_Rg=s1600' },
+                { id: 6, type: 'text', content: 'Very  curious, I decided to pursue a PhD in Economics with a strong focus on  quantitative methods (causal ML and quasi-experimental methods).' },
+                { id: 6, type: 'image', content: 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYQpPIuh4LvzL56QzbVEM4W4kk37uCt2xxytFvEjiOvJeM_tiUjPQA8LXkbDZY6l5bUIi7JUHvq7rAHRjNdYr8i8Now6_A=s1600' },
+                { id: 7, type: 'text', content: 'I am a team player who thrives in a co-creating environment with different ideas and inputs. ' },
+                { id: 7, type: 'image', content: 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYRUnhL6gQf7U9lvjq62pfbBqXTCYwcPSKB45TQW0puN3oI5Sc_oCQ1TUNmdrpO-ZDEypVYeyAHAybBdMPzNh8ny5pdP=s1600' },
+                { id: 8, type: 'text', content: 'I spent my last two years at SWICA gathering intelligence from insurance claim data and communicating them to internal and external stakeholders.' },
+                { id: 8, type: 'image', content: 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYT54l0OdCwX-Xqt2EDVXRLAeC9_njnBiNtOwU_6bRBrTa9rtIJAn3JjvDP16WjLg2VBPIXOyaCtO0ZLbeXiRPaEseS3Fg=s1600' },
+                //'https://lh3.googleusercontent.com/drive-viewer/AEYmBYQAvtFm7D1ZsugEicrMeIOnxxoIenvPUVVEuFqKGej5o_70A7hes-tw4Vu0WtrVc7K-h3QOsekhxKeIq0EWV1x_dVhd=s1600' },
+                //{ id: 9, type: 'text', content: 'Bread ' },
+                //{ id: 9, type: 'image', content: 'bread.jpg' },
+                // Continue for each pair
+            ];
+
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]]; // ES6 array destructuring
+                }
+            }
+            shuffleArray(cardArray); // Shuffle the cards
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const gameBoard = document.getElementById('game-board');
+
+                function createBoard() {
+                    for (let i = 0; i < cardArray.length; i++) {
+                        const card = document.createElement('div');
+                        card.classList.add('card');
+                        card.setAttribute('data-id', i);
+
+                        if (cardArray[i].type === 'image') {
+                            const cardImage = document.createElement('img');
+                            cardImage.setAttribute('src', 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYRsYA8ioI6i2F3R18eEGEySCj3_xl_6ScY_rEVBIkuAR68WbN7aSSg84rTPPu_EnyqshM7x63uv5BifPFE78jmD0Ad9CA=s2560');
+                            //cardImage.setAttribute('src', 'backRed.jpg');
+                            cardImage.setAttribute('data-id', i);
+                            card.appendChild(cardImage);
+                        } else {
+                            // Create a div for text inside the card
+                            const cardText = document.createElement('div');
+                            cardText.classList.add('card-text');
+                            cardText.textContent = cardArray[i].content;
+                            cardText.style.display = 'none'; // Initially hidden
+                            card.appendChild(cardText);
+                        }
+
+                        gameBoard.appendChild(card);
+                        card.addEventListener('click', flipCard);
+                    }
+                }
+
+                createBoard();
+            });
+
+
+            function flipCard() {
+                const cardId = this.getAttribute('data-id');
+
+                // Check if the card is already selected or the same card is clicked twice
+                if (cardsChosenIds.includes(cardId)) {
+                    // Do nothing if the same card is clicked twice or already selected
+                    return;
+                }
+
+                const cardType = cardArray[cardId].type;
+                if (cardType === 'image') {
+                    this.firstChild.setAttribute('src', cardArray[cardId].content);
+                } else {
+                    // For text cards, show the text if hidden, or hide if shown
+                    const cardText = this.querySelector('div');
+                    cardText.style.display = cardText.style.display === 'none' ? 'block' : 'none';
+                }
+
+                cardsChosen.push(cardArray[cardId]);
+                cardsChosenIds.push(cardId);
+
+                if (cardsChosen.length === 2) {
+                    setTimeout(checkForMatch, 1000);
+                }
+            }
+
+            function checkForMatch() {
+                const cards = document.querySelectorAll('.card');
+                const optionOneId = cardsChosenIds[0];
+                const optionTwoId = cardsChosenIds[1];
+                const optionOneContent = cards[optionOneId].querySelector('.card-text') || cards[optionOneId].querySelector('img');
+                const optionTwoContent = cards[optionTwoId].querySelector('.card-text') || cards[optionTwoId].querySelector('img');
+
+                if (cardsChosen[0].id === cardsChosen[1].id) {
+                    alert('You found a match');
+                    cards[optionOneId].style.visibility = 'hidden';
+                    cards[optionTwoId].style.visibility = 'hidden';
+                } else {
+                    // Reset both cards
+                    if (optionOneContent.tagName === 'IMG') {
+                        //optionOneContent.setAttribute('src', 'backRed.jpg');
+                        optionOneContent.setAttribute('src', 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYRsYA8ioI6i2F3R18eEGEySCj3_xl_6ScY_rEVBIkuAR68WbN7aSSg84rTPPu_EnyqshM7x63uv5BifPFE78jmD0Ad9CA=s2560');
+                    } else {
+                        optionOneContent.style.display = 'none'; // Hide text
+                    }
+                    if (optionTwoContent.tagName === 'IMG') {
+                        //optionTwoContent.setAttribute('src', 'backRed.jpg');
+                        optionTwoContent.setAttribute('src', 'https://lh3.googleusercontent.com/drive-viewer/AEYmBYRsYA8ioI6i2F3R18eEGEySCj3_xl_6ScY_rEVBIkuAR68WbN7aSSg84rTPPu_EnyqshM7x63uv5BifPFE78jmD0Ad9CA=s2560');
+                    } else {
+                        optionTwoContent.style.display = 'none'; // Hide text
+                    }
+                }
+                cardsChosen = [];
+                cardsChosenIds = [];
+            }
+
+            let cardsChosen = [];
+            let cardsChosenIds = [];
+
+        </script>
+
+</body>
+</div>
+
+
+</html>
